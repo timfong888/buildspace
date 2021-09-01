@@ -3,8 +3,7 @@
 pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
-import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol"; //Chainlink 
-
+import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol"; //Chainlink 
 
 
 contract BuildSpace {
@@ -13,6 +12,9 @@ contract BuildSpace {
     
     string public waverName;
     string[] public namesArray;
+    
+    string[] public handArray = ["rock", "paper", "scissors"];
+    
     
     bool winner;
     
@@ -23,9 +25,11 @@ contract BuildSpace {
         console.log("Yo yo, I am a contract and I am smart");
     }
     
-    function wave() public {
+    function wave(string memory _hand) public {
         totalWaves +=1;
-        console.log("%s just waved", msg.sender);
+        
+        // each wave also needs to pass a "rock", "paper", "scissors"
+        console.log("%s just waved with a %s", msg.sender, _hand);
     }
     
     function getTotalWaves() public view returns (uint) {

@@ -12,12 +12,12 @@ async function main() {
     waveCount = await buildSpaceContract.getTotalWaves();
     
     let waveTxn;
-    waveTxn = await buildSpaceContract.wave();
+    waveTxn = await buildSpaceContract.wave("rock");
     await waveTxn.wait();
     
     waveCount = await buildSpaceContract.getTotalWaves();
     
-    waveTxn = await buildSpaceContract.connect(randoPerson).wave();
+    waveTxn = await buildSpaceContract.connect(randoPerson).wave("paper");
     await waveTxn.wait();
     
     waveTxn = await buildSpaceContract.addWaver(randoPerson.address, "Bob");
