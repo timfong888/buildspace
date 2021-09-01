@@ -15,8 +15,14 @@ contract BuildSpace {
     
     string[] public handArray = ["rock", "paper", "scissors"];
     
+    struct public Throw {
+        address throwerAddress;
+        string hand;
+        uint timestamp;
+        bool winner;
+    }
     
-    bool winner;
+    Throw[] throwsArray;
     
     // Map address to a "name"
     mapping(address => string) public waverAddressNames;
@@ -43,5 +49,13 @@ contract BuildSpace {
         waverAddressNames[_waverAddress] = _waverName;
         console.log("%s is named %s", _waverAddress, _waverName);
     }
+    
+    // retrieve the last hand on the blockchain
+    function readLastThrow public {
+        // are these storied in an array?
+        // get the last one in the array
+        
+    }
+    
     
 }
