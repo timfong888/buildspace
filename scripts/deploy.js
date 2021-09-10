@@ -4,11 +4,11 @@ async function main() {
     console.log("Deploying contracts with account:", deployer.address);
     console.log("Account balance:", (await deployer.getBalance()).toString());
     
-    const Token = await ethers.getContractFactory("BuildSpace"); //https://docs.ethers.io/v5/api/contract/contract-factory/
+    const buildSpaceContract = await ethers.getContractFactory("BuildSpace"); //https://docs.ethers.io/v5/api/contract/contract-factory/
     
-    const token = await Token.deploy();
+    const token = await buildSpaceContract.deploy({value: ethers.utils.parseEther("0.1")});
     
-    console.log ("Token: ", Token);
+    console.log ("buildSpaceContract: ", buildSpaceContract);
     console.log ("token:", token);
     
     console.log("BuildSpace contract address: %s", token.address);

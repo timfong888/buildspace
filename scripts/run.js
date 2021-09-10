@@ -1,28 +1,35 @@
 async function main() {
-    const [owner, randoPerson] = await ethers.getSigners();
-    const buildSpaceContractFactory = await hre.ethers.getContractFactory("BuildSpace");
-    const buildSpaceContract = await buildSpaceContractFactory.deploy();
-    await buildSpaceContract.deployed();
+    //const [owner, randoPerson] = await ethers.getSigners()
+    const buildSpaceContractFactory = await hre.ethers.getContractFactory("BuildSpace")
+    const buildSpaceContract = await buildSpaceContractFactory.deploy({value: hre.ethers.utils.parseEther("0.1")})
+    await buildSpaceContract.deployed()
     
-    console.log("Contract deployed to:", buildSpaceContract.address);
-    console.log("Contract deployed by:", owner.address);
-    console.log("randoPerson address:", randoPerson.address);
+    console.log("Contract deployed to:", buildSpaceContract.address)
     
-    let waveCount;
-    waveCount = await buildSpaceContract.getTotalWaves();
+    let contractBalance = await hre.ethers.provider.getBalance(buildSpaceContract.address)
+    console.log("Contract balance:", hre.ethers.utils.formatEther(contractBalance))
     
-    let waveTxn;
-    waveTxn = await buildSpaceContract.wave("rock");
-    await waveTxn.wait();
+    //console.log("Contract deployed by:", owner.address)
+    //console.log("randoPerson address:", randoPerson.address)
     
-    waveCount = await buildSpaceContract.getTotalWaves();
+    let waveCount = await buildSpaceContract.getTotalWaves()
     
-    waveTxn = await buildSpaceContract.connect(randoPerson).wave("paper");
-    await waveTxn.wait();
+    let throwTxn = await buildSpaceContract.throwHand(0, "message1")
+    await throwTxn.wait()
     
-    waveTxn = await buildSpaceContract.addWaver(randoPerson.address, "Bob");
-    await waveTxn.wait();
+    throwTxn = await buildSpaceContract.throwHand(1, "message2")
+    await throwTxn.wait()
     
+    throwTxn = await buildSpaceContract.throwHand(2, "message2")
+    await throwTxn.wait()
+    
+    contractBalance = await hre.ethers.provider.getBalance(buildSpaceContract.address)
+    console.log("Contract balance:", hre.ethers.utils.formatEther(contractBalance))
+    
+    let allThrows = await buildSpaceContract.getAllThrows()
+    console.log(allThrows)
+    
+
 }
 
 main()
